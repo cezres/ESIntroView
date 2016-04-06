@@ -38,7 +38,7 @@ public class ESIntroView: UIScrollView, UIScrollViewDelegate {
         pageControl.backgroundColor    = UIColor(red: 0, green: 0, blue: 0, alpha: 0.4)
         pageControl.layer.cornerRadius = 10
         
-        for (index, view) in views.enumerate() {
+        for (_, view) in views.enumerate() {
             addSubview(view)
         }
     }
@@ -92,10 +92,10 @@ public class ESIntroView: UIScrollView, UIScrollViewDelegate {
         }
         
         if contentOffset.x > CGFloat(currentIndex+1) * frame.width {
-            ++currentIndex
+            currentIndex += 1
         }
         else if contentOffset.x < CGFloat(currentIndex-1) * frame.width {
-            --currentIndex
+            currentIndex -= 1
         }
     }
     
