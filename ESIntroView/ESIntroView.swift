@@ -10,7 +10,7 @@ import UIKit
 
 
 public class ESIntroView: UIScrollView, UIScrollViewDelegate {
-    let views: [UIView]
+    var views: [UIView]
     public var currentIndex: Int = 0 {
         didSet {
             if currentIndex < views.count {
@@ -23,14 +23,13 @@ public class ESIntroView: UIScrollView, UIScrollViewDelegate {
     
     public init(views: [UIView]) {
         self.views = views
-        super.init(frame: UIScreen.mainScreen().bounds)
+        super.init(frame: CGRectZero)
         
         UIApplication.sharedApplication().delegate!.window!!.windowLevel = UIWindowLevelAlert
         
         backgroundColor                = UIColor.blackColor()
         pagingEnabled                  = true
         showsHorizontalScrollIndicator = false
-        contentSize                    = CGSizeMake(frame.width * CGFloat(views.count+1), 0)
         delegate                       = self
 
         let pageControlWidth           = CGFloat(15 * views.count) + 20
@@ -42,8 +41,6 @@ public class ESIntroView: UIScrollView, UIScrollViewDelegate {
         for (index, view) in views.enumerate() {
             addSubview(view)
         }
-        let view = UIView(frame: CGRectMake(frame.width * CGFloat(views.count), 0, frame.width, frame.height))
-        addSubview(view)
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -58,7 +55,13 @@ public class ESIntroView: UIScrollView, UIScrollViewDelegate {
     public override func layoutSubviews() {
         super.layoutSubviews()
         
+        guard frame != UIScreen.mainScreen().bounds else {
+            return
+        }
+        
         frame              = UIScreen.mainScreen().bounds
+        contentSize        = CGSizeMake(frame.width * CGFloat(views.count+1), 0)
+        contentOffset      = CGPoint(x: frame.width * CGFloat(currentIndex), y: 0)
         
         pageControl.center = CGPoint(x: frame.width/2, y: frame.height-20)
         
@@ -83,8 +86,16 @@ public class ESIntroView: UIScrollView, UIScrollViewDelegate {
     }
     public func scrollViewDidScroll(scrollView: UIScrollView) {
         let index = Int(contentOffset.x / frame.width)
+        
         if index == views.count-1 {
             alpha = 1.0 - ((contentOffset.x - frame.width * CGFloat(index)) / frame.width)
+        }
+        
+        if contentOffset.x > CGFloat(currentIndex+1) * frame.width {
+            ++currentIndex
+        }
+        else if contentOffset.x < CGFloat(currentIndex-1) * frame.width {
+            --currentIndex
         }
     }
     
