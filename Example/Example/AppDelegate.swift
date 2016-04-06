@@ -1,12 +1,15 @@
 //
 //  AppDelegate.swift
-//  ESIntroViewDemo
+//  Example
 //
-//  Created by 翟泉 on 16/3/28.
-//  Copyright © 2016年 云之彼端. All rights reserved.
+//  Created by cezr on 16/4/6.
+//  Copyright © 2016年 cezr. All rights reserved.
 //
 
 import UIKit
+import ESIntroView
+
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,18 +22,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         var views = [UIView]()
         
-        
-        let v1 = UIView()
-        v1.backgroundColor = UIColor.orangeColor()
-        views.append(v1)
-        
-        let v2 = UIView()
-        v2.backgroundColor = UIColor.yellowColor()
-        views.append(v2)
-        
-        let v3 = UIView()
-        v3.backgroundColor = UIColor.greenColor()
-        views.append(v3)
+        for i in 1 ... 4 {
+            guard let path = NSBundle.mainBundle().pathForResource("\(i)", ofType: "jpeg") else {
+                continue
+            }
+            let view = UIImageView(image: UIImage(contentsOfFile: path))
+            views.append(view)
+        }
         
         let introView = ESIntroView(views: views)
         window?.rootViewController?.view.addSubview(introView)

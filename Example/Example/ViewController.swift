@@ -1,9 +1,9 @@
 //
 //  ViewController.swift
-//  ESIntroViewDemo
+//  Example
 //
-//  Created by 翟泉 on 16/3/28.
-//  Copyright © 2016年 云之彼端. All rights reserved.
+//  Created by cezr on 16/4/6.
+//  Copyright © 2016年 cezr. All rights reserved.
 //
 
 import UIKit
@@ -13,7 +13,6 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        view.backgroundColor = UIColor.grayColor()
     }
 
     override func didReceiveMemoryWarning() {
